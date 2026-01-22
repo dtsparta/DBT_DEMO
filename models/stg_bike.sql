@@ -1,19 +1,21 @@
-WITH bike AS (
-    SELECT
-        RIDE_ID,
-        REPLACE(STARTED_AT, '"', '') AS STARTED_AT,
-        REPLACE(ENDED_AT, '"', '') AS ENDED_AT,
-        START_STATION_NAME,
-        START_STATIO_ID AS START_STATION_ID,
-        END_STATION_NAME,
-        END_STATION_ID,
-        START_LAT,
-        START_LNG,
-        END_LAT,
-        END_LNG,
-        MEMBER_CSUAL
-    FROM {{ source('DEMO', 'bike2') }}
-    WHERE ride_id != 'ride_id'
-    LIMIT 100
-)
-SELECT * FROM bike
+with
+    bike as (
+        select
+            ride_id,
+            replace(started_at, '"', '') as started_at,
+            replace(ended_at, '"', '') as ended_at,
+            start_station_name,
+            start_statio_id as start_station_id,
+            end_station_name,
+            end_station_id,
+            start_lat,
+            start_lng,
+            end_lat,
+            end_lng,
+            member_csual
+        from {{ source("DEMO", "bike2") }}
+        where ride_id != 'ride_id'
+        limit 100
+    )
+select *
+from bike
